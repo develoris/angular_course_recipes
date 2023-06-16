@@ -20,7 +20,6 @@ export class ShoppingEditComponent  {
   onAddIngredient() {
     const ingName = this.inputNameRef.nativeElement.value;
     const ingAmount = this.inputAmountRef.nativeElement.value;
-    console.log('new ingredient')
     this.shoppingListService.addIngredient(new IngredientModel(ingName, ingAmount))
   }
 }

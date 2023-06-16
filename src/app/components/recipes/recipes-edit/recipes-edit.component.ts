@@ -15,6 +15,5 @@ export class RecipesEditComponent implements OnInit {
   }
   setEditMode(params: Params) {
     this.editMode = params['ID'] != null;
-    console.log(this.editMode);
   }
 }
