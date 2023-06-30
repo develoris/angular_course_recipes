@@ -1,13 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  tap,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import UserModel from './user.model';
+import { Router } from '@angular/router';
 
 export interface IAuthResponse {
   kind: string;
@@ -22,7 +17,8 @@ export interface IAuthResponse {
 })
 export class AuthService {
   user = new BehaviorSubject<UserModel | null>(null);
-  constructor(private http: HttpClient) {}
+  tokenExpirationTimer!: any;
+  constructor(private http: HttpClient, private router: Router) {}
 
   /**
    *
@@ -33,13 +29,13 @@ export class AuthService {
   signIn(email: string, password: string): Observable<IAuthResponse> {
     return this.http
       .post<IAuthResponse>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword',
+        // eslint-disable-next-line max-len
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAQqxa6OEKlTdb7w9GY0SX2jYcIYTt6HJg',
         {
           email,
           password,
           returnSecureToken: true,
-        },
-        {params: new HttpParams().set('key', 'AIzaSyAQqxa6OEKlTdb7w9GY0SX2jYcIYTt6HJg')}
+        }
       )
       .pipe(
         catchError(this.errorHandler),
@@ -82,8 +78,15 @@ export class AuthService {
       );
   }
 
-  logOut(){
+  logOut() {
     this.user.next(null);
+    localStorage.removeItem('userData');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+    this.router.navigate(['/auth']);
+
   }
 
   /**
@@ -102,6 +105,9 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + expiresIn);
     const user = new UserModel(email, userId, token, expirationDate);
     this.user.next(user);
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.autoLogout(expirationDate.getTime());
+    this.router.navigate(['/recipes']);
   }
 
   errorHandler(err: any) {
@@ -118,5 +124,33 @@ export class AuthService {
         errorMessage = 'Email or Password wrong';
     }
     return throwError(() => errorMessage);
+  }
+  autoLogin() {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: Date;
+    } = JSON.parse(localStorage.getItem('userData') || '');
+    if (!userData) return;
+    const loadedUser = new UserModel(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      const remaningTokenExpirationTime =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
+      this.autoLogout(remaningTokenExpirationTime);
+    }
+  }
+  autoLogout(tokenExpirationTime: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      console.log('autoLogout');
+      this.logOut();
+    }, tokenExpirationTime);
   }
 }

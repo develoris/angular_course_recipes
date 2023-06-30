@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, IAuthResponse } from './auth.service';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +16,6 @@ export class AuthComponent  {
   @ViewChild('f') authForm!: NgForm;
   constructor(
     private authService: AuthService,
-    private router: Router,
   ) {}
 
   switchLogged() {
@@ -42,6 +40,5 @@ export class AuthComponent  {
   }
   successAuth() {
     this.loading = false;
-    this.router.navigate(['/recipes']);
   }
 }
