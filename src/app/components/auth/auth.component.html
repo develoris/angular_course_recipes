@@ -1,0 +1,55 @@
+<div  class="row">
+  <div class="mx-auto col-10 col-md-8 col-lg-6">
+    <!-- Form -->
+    <div *ngIf="errMsg" class="alert alert-danger" role="alert">
+      {{errMsg}}
+    </div>
+    <form *ngIf="!loading" #f="ngForm" class="form-example">
+      <!-- <h1>Bootstrap 5: Align Center</h1>
+      <p class="description">
+        A tutorial on how to align a "form" in Bootstrap 4 and 5.
+      </p> -->
+      <!-- Input fields -->
+      <div class="form-group">
+        <label for="email">e-mail:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          placeholder="Email..."
+          name="email"
+          ngModel
+          required
+          email
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          class="form-control password"
+          id="password"
+          placeholder="Password..."
+          name="password"
+          ngModel
+          required
+          maxlength="12"
+          minlength="6"
+        />
+      </div>
+      <div class="row mt-4">
+        <div class="col-10 col-md-8 col-lg-6">
+          <button [disabled]="!f.valid" type="submit" (click)="onSubmit()" class="btn btn-primary me-3">
+            {{isLogginMode ? 'signIn' : 'SignUp'}}
+          </button>
+          <button type="button" class="btn btn-success" (click)="switchLogged()"> switch Logged</button>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="loading" class="text-center">
+      <app-loading-spinner ></app-loading-spinner>
+      <!-- <app-loading-spinner class="text-center"></app-loading-spinner> -->
+    </div>
+    <!-- Form end -->
+  </div>
+</div>
