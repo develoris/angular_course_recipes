@@ -1,10 +1,10 @@
-import { IngredientModel } from "src/app/shared/ingredient.model";
+import { IngredientModel } from 'src/app/shared/ingredient.model';
 
 export default class RecipeModel {
   public name: string;
   public description: string;
   public imageUrl: string;
-  ingredients: IngredientModel[]
+  ingredients: IngredientModel[];
 
   constructor(name: string, description: string, imageUrl: string, ingredients: IngredientModel[]) {
     this.name = name;

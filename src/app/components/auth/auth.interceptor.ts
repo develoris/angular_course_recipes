@@ -1,7 +1,7 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from "@angular/common/http";
-import { Observable, exhaustMap, take } from "rxjs";
-import { AuthService } from "./auth.service";
-import { Injectable } from "@angular/core";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { Observable, exhaustMap, take } from 'rxjs';
+import { AuthService } from './auth.service';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export default class AuthInterceptor implements HttpInterceptor{
@@ -13,10 +13,10 @@ export default class AuthInterceptor implements HttpInterceptor{
         if(!user || (user && user.token === null)){
           return next.handle(req);
         }
-        const requestClone = req.clone({params: new HttpParams().set('auth', <string>user.token)})
-        return next.handle(requestClone)
+        const requestClone = req.clone({params: new HttpParams().set('auth', <string>user.token)});
+        return next.handle(requestClone);
       })
-    )
+    );
   //  return next.handle(req)
   }
 

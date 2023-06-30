@@ -40,7 +40,7 @@ export class RecipesEditComponent implements OnInit {
     let recipeName = '';
     let recipeimageUrl = '';
     let recipeDescription = '';
-    let recipeIngredients = new FormArray<FormGroup>([], this.atLeastOne);
+    const recipeIngredients = new FormArray<FormGroup>([], this.atLeastOne);
     const { required, pattern } = Validators;
     if (this.editMode) {
       const recipe = this.recipesService.getRecipe (this.id);
@@ -75,9 +75,9 @@ export class RecipesEditComponent implements OnInit {
   }
   onSubmit() {
     if(this.editMode){
-      this.recipesService.updateRecipe(this.id, this.recipeForm.value)
+      this.recipesService.updateRecipe(this.id, this.recipeForm.value);
     } else {
-      this.recipesService.addRecipe(this.recipeForm.value)
+      this.recipesService.addRecipe(this.recipeForm.value);
     }
     this.onCancelRecipes();
   }
@@ -111,10 +111,10 @@ export class RecipesEditComponent implements OnInit {
   }
 
   onDeleteRecipe(){
-    const conf = confirm('Are you sure?')
+    const conf = confirm('Are you sure?');
     if(conf){
-      this.recipesService.deleteRecipe(this.id)
-      this.router.navigate(['../'], {relativeTo: this.activatedRoute})
+      this.recipesService.deleteRecipe(this.id);
+      this.router.navigate(['../'], {relativeTo: this.activatedRoute});
     }
   }
 
@@ -123,6 +123,6 @@ export class RecipesEditComponent implements OnInit {
       return;
     }
       this.recipeForm.reset();
-      this.router.navigate(['/recipes'])
+      this.router.navigate(['/recipes']);
   }
 }

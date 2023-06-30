@@ -1,13 +1,9 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive } from '@angular/core';
 
 @Directive({
   selector: '[appDropdown]'
 })
-export class DropdownDirective implements OnInit {
+export class DropdownDirective  {
 
-  constructor() { }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
 }

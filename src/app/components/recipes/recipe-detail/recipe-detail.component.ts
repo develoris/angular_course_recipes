@@ -12,24 +12,27 @@ import ShoppingListService from '../../shopping-list/shoppingList.service';
 export class RecipeDetailComponent implements OnInit {
   id!: number;
   recipe!: RecipeModel;
-  constructor(private recipesService: RecipesService, private router: Router, private activatedRoute: ActivatedRoute, private ingredientsService: ShoppingListService) {
-
-  }
+  constructor(
+    private recipesService: RecipesService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private ingredientsService: ShoppingListService
+  ) {}
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((data: Data) => {
       this.id = +data['ID'];
       this.recipe = <RecipeModel>this.recipesService.getRecipe(this.id);
-    })
+    });
   }
   addIngredient() {
-    this.ingredientsService.addIngredients(this.recipe.ingredients)
+    this.ingredientsService.addIngredients(this.recipe.ingredients);
   }
-  
+
   onDeleteRecipe() {
-    const conf = confirm('Are you sure?')
+    const conf = confirm('Are you sure?');
     if (conf) {
-      this.recipesService.deleteRecipe(this.id)
-      this.router.navigate(['../'], { relativeTo: this.activatedRoute })
+      this.recipesService.deleteRecipe(this.id);
+      this.router.navigate(['../'], { relativeTo: this.activatedRoute });
     }
   }
 }

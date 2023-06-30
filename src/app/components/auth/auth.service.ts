@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
-  Subject,
   catchError,
   tap,
   throwError,
@@ -34,12 +33,13 @@ export class AuthService {
   signIn(email: string, password: string): Observable<IAuthResponse> {
     return this.http
       .post<IAuthResponse>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAQqxa6OEKlTdb7w9GY0SX2jYcIYTt6HJg',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword',
         {
           email,
           password,
           returnSecureToken: true,
-        }
+        },
+        {params: new HttpParams().set('key', 'AIzaSyAQqxa6OEKlTdb7w9GY0SX2jYcIYTt6HJg')}
       )
       .pipe(
         catchError(this.errorHandler),
@@ -118,9 +118,5 @@ export class AuthService {
         errorMessage = 'Email or Password wrong';
     }
     return throwError(() => errorMessage);
-  }
-
-  pipeSign(){
-    return
   }
 }

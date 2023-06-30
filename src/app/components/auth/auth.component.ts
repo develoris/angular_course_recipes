@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, IAuthResponse } from './auth.service';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.sass'],
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent  {
   loading = false;
   isLogginMode = true;
   errMsg = '';
@@ -18,10 +18,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
   switchLogged() {
     this.isLogginMode = !this.isLogginMode;
   }
@@ -42,7 +40,7 @@ export class AuthComponent implements OnInit {
     this.loading = false;
     this.errMsg = errMessage;
   }
-  successAuth(authResponse: IAuthResponse) {
+  successAuth() {
     this.loading = false;
     this.router.navigate(['/recipes']);
   }

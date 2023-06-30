@@ -1,6 +1,5 @@
 import { Subject } from 'rxjs';
 import RecipeModel from 'src/app/components/recipes/recipe.model';
-import { IngredientModel } from 'src/app/shared/ingredient.model';
 
 export default class RecipesService {
   changeRecipes = new Subject<RecipeModel[]>();
