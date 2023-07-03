@@ -86,7 +86,6 @@ export class AuthService {
     }
     this.tokenExpirationTimer = null;
     this.router.navigate(['/auth']);
-
   }
 
   /**
@@ -131,7 +130,7 @@ export class AuthService {
       id: string;
       _token: string;
       _tokenExpirationDate: Date;
-    } = JSON.parse(localStorage.getItem('userData') || '');
+    } = JSON.parse(localStorage.getItem('userData') || 'null');
     if (!userData) return;
     const loadedUser = new UserModel(
       userData.email,
@@ -149,7 +148,6 @@ export class AuthService {
   }
   autoLogout(tokenExpirationTime: number) {
     this.tokenExpirationTimer = setTimeout(() => {
-      console.log('autoLogout');
       this.logOut();
     }, tokenExpirationTime);
   }

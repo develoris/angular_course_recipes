@@ -1,22 +1,23 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, IAuthResponse } from './auth.service';
-import { Observable } from 'rxjs';
-
+import { Observable, Subscription } from 'rxjs';
+import { PlaceholderDirective } from '../../shared/placeholderDirective/placeholder.directive';
+import { AlertComponent } from 'src/app/shared/alert/alert.component';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.sass'],
 })
-export class AuthComponent  {
+export class AuthComponent implements OnDestroy {
   loading = false;
   isLogginMode = true;
-  errMsg = '';
+  closeSubscription!: Subscription;
   authObs!: Observable<IAuthResponse>;
   @ViewChild('f') authForm!: NgForm;
-  constructor(
-    private authService: AuthService,
-  ) {}
+  @ViewChild(PlaceholderDirective, { read: ViewContainerRef })
+  alertHost!: ViewContainerRef;
+  constructor(private authService: AuthService)  {}
 
   switchLogged() {
     this.isLogginMode = !this.isLogginMode;
@@ -36,9 +37,26 @@ export class AuthComponent  {
   }
   errorAuth(errMessage: string) {
     this.loading = false;
-    this.errMsg = errMessage;
+
+    this._showAlertError(errMessage);
   }
   successAuth() {
     this.loading = false;
+  }
+
+  private _showAlertError(msg: string) {
+    this.alertHost.clear();
+    const cmp = this.alertHost.createComponent(AlertComponent);
+    cmp.instance.msg = msg;
+    this.closeSubscription = cmp.instance.close$.subscribe(() => {
+      cmp.destroy();
+      this.closeSubscription.unsubscribe();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.closeSubscription) {
+      this.closeSubscription.unsubscribe();
+    }
   }
 }

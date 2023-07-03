@@ -10,7 +10,6 @@ export default class AuthInterceptor implements HttpInterceptor{
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user)=>{
-        console.log('condition token', !user || (user && user.token === null));
         if(!user || (user && user.token === null)){
           return next.handle(req);
         }

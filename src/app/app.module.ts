@@ -19,6 +19,7 @@ import RecipesService from './components/recipes/recipes.service';
 import { AuthComponent } from './components/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import AuthInterceptor from './components/auth/auth.interceptor';
+import { PlaceholderDirective } from './shared/placeholderDirective/placeholder.directive';
 // import { Routes } from '@angular/router';
 
 // const appRouter: Routes
@@ -36,6 +37,7 @@ import AuthInterceptor from './components/auth/auth.interceptor';
     RecipesEditComponent,
     AuthComponent,
     LoadingSpinnerComponent,
+    PlaceholderDirective
   ],
   imports: [
     BrowserModule,
