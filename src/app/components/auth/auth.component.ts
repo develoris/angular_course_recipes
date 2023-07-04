@@ -6,8 +6,7 @@ import { PlaceholderDirective } from '../../shared/placeholderDirective/placehol
 import { AlertComponent } from 'src/app/shared/alert/alert.component';
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.sass'],
+  templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnDestroy {
   loading = false;

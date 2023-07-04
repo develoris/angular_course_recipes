@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export default class AuthInterceptor implements HttpInterceptor{
   constructor(private authService: AuthService){}
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user)=>{

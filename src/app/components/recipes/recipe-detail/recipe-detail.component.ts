@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import RecipeModel from 'src/app/components/recipes/recipe.model';
 import RecipesService from '../recipes.service';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import ShoppingListService from '../../shopping-list/shoppingList.service';
+import ShoppingListService from '../../shopping-list/shopping-list.service';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrls: ['./recipe-detail.component.sass'],
 })
 export class RecipeDetailComponent implements OnInit {
   id!: number;

@@ -1,8 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import UserModel from './user.model';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 export interface IAuthResponse {
   kind: string;
@@ -30,7 +31,7 @@ export class AuthService {
     return this.http
       .post<IAuthResponse>(
         // eslint-disable-next-line max-len
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAQqxa6OEKlTdb7w9GY0SX2jYcIYTt6HJg',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseApiKey,
         {
           email,
           password,
@@ -58,7 +59,7 @@ export class AuthService {
   signUp(email: string, password: string): Observable<IAuthResponse> {
     return this.http
       .post<IAuthResponse>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAQqxa6OEKlTdb7w9GY0SX2jYcIYTt6HJg',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseApiKey,
         {
           email,
           password,

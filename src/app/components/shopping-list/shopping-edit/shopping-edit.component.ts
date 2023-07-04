@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IngredientModel } from 'src/app/shared/ingredient.model';
-import ShoppingListService from '../shoppingList.service';
+import ShoppingListService from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
-  styleUrls: ['./shopping-edit.component.sass'],
 })
 export class ShoppingEditComponent implements OnInit {
   @ViewChild('f', { static: true }) ingredientForm!: NgForm;
@@ -33,7 +32,7 @@ export class ShoppingEditComponent implements OnInit {
       );
   }
 
-  onDeleteIngredient(){
+  onDeleteIngredient() {
     this.shoppingListService.deleteIngredient(this.editItemIndex);
     this.onReset();
   }

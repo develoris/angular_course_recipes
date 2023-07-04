@@ -3,8 +3,14 @@ import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-alert',
-  templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.sass'],
+  template: `<div class="backdrop" (click)="onClose()"></div>
+    <div class="alert-box">
+      <p>{{ msg }}</p>
+      <div class="alert-box-actions">
+        <button class="btn btn-primary" (click)="onClose()">Close</button>
+      </div>
+    </div> `,
 })
 export class AlertComponent {
   @Input() msg!: string;
